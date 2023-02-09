@@ -21,7 +21,7 @@
 	function mysubs_info()
 	{
 		return array(
-			'name'			=> 'MySubscriptions',
+			'name'			=> 'BUY zMotan Cheats',
 			'description'	=> 'Lets you implement paid subscriptions to groups within your forums.',
 			'website'		=> 'http://www.pokemonforum.org',
 			'author'		=> 'Ethan',
