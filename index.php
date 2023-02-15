@@ -1,88 +1,89 @@
+<?php
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
-<link href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+require_once 'app/require.php';
+require_once 'app/controllers/CheatController.php';
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="ROBOTS" content="NOINDEX, FOLLOW" />
-<title>Info / zMotan Cheats</title>
-<link rel="stylesheet" type="text/css" href="style/Cobalt.css" />
+$user = new UserController;
+$cheat = new CheatController;
 
-<style type="text/css">.gid1 {color: #b4e61e; font-weight: bold} .gid2 {color: #ff9933; font-weight: bold} .gid5 {color: #e61515; font-weight: bold} </style>
-<link href="https://fonts.googleapis.com/css?family=Raleway:900,400" rel="stylesheet" type="text/css">
+Session::init();
 
-<link rel="stylesheet" type="text/css" href="/static/css/font-awesome.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<link rel="icon" href="favicon.ico" /> 
+if (!Session::isLogged()) { Util::redirect('/login.php'); }
 
-<!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="favicon.ico" /><![endif]-->
-</head>
+$username = Session::get("username");
 
-<body>
-<nav class="gs-navbar">
-	<div class="gs-nav-container">
-		<ul>
-			<li><a href="/"><i class="fa fa-home"></i></a></li>
-			<li class="active"><a href="/forums">SITE</a></li>
-		</ul>
+Util::banCheck();
+Util::head($username);
+Util::navbar();
+
+?>
+
+<main class="container mt-2">
+
+	<div class="row">
+
+		<!--Welome message-->
+		<div class="col-12 mt-3 mb-2">
+			<div class="alert alert-primary" role="alert">
+				Welcome back, <a href="/profile.php"><b><?php Util::display($username) ?></b></a>.
+			</div>
+		</div>
+
+
+		<!--Statistics-->
+		<div class="col-lg-9 col-md-12">
+			<div class="rounded p-3 mb-3">
+				<div class="h5 border-bottom border-secondary pb-1"><i class="fas fa-chart-area"></i> Statistics</div>
+				<div class="row text-muted">
+
+					<!--Total Users-->
+					<div class="col-12 clearfix">
+						Users: <p class="float-right mb-0"><?php Util::display($user->getUserCount()); ?></p>
+					</div>
+
+					<!--Latest User-->
+					<div class="col-12 clearfix">
+						Latest User: <p class="float-right mb-0"><?php Util::display($user->getNewUser()); ?></p>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+		<!--Status-->
+		<div class="col-lg-3 col-md-12">
+			<div class="rounded p-3 mb-3">
+				<div class="h5 border-bottom border-secondary pb-1"><i class="fas fa-exclamation-circle"></i> Status</div>
+				<div class="row text-muted">
+
+					<!--Detected // Undetected-->
+					<div class="col-12 clearfix">
+						Status: <p class="float-right mb-0"><?php Util::display($cheat->getCheatData()->status); ?></p>
+					</div>
+
+					<!--Cheat version-->
+					<div class="col-12 clearfix">
+						Version: <p class="float-right mb-0"><?php Util::display($cheat->getCheatData()->version); ?></p>
+					</div>
+	
+					<!-- Check if has sub --> 
+					<?php if ($user->getSubStatus() > 0) : ?>
+						<div class="col-12 text-center pt-1">
+							<div class="border-top border-secondary pt-1">
+
+							<a href="/download.php">Download Loader</a>
+							</div>
+						</div>
+					<?php endif; ?>
+
+				</div>
+			</div>
+		</div>
+
+
+
 	</div>
-</nav>
-<div class="gs-divider"></div>
 
-<body>
-
-<div id="punindex" class="pun">
-<div class="top-box"></div>
-<div class="punwrap">
-<div id="brdheader" class="block">
-	<div class="box">
-		<div id="brdtitle" class="inbox">
-			<h1><a href="index.php">zMotan<span> Cheats</span></a></h1>
-			<div id="brddesc"><p><span>Aleluia...  Ai luat muia</span></p></div>
-		</div>
-		<div id="brdmenu" class="inbox">
-			<ul>
-				<li id="navindex" class="isactive"><a href="home.php">Forum</a></li>
-				<li id="navregister" class="isactive"><a href="member.php?action=register">Register</a></li>
-				<li id="navlogin" class="isactive"><a href="member.php?action=login">Login</a></li>
-			</ul>
-		</div>
-		<div id="brdwelcome" class="inbox">
-			<div class="clearer"></div>
-		</div>
-	</div>
-</div>
-
-
-
-
-<div id="brdmain">
-<div id="msg" class="block">
-	<h2><span>Info</span></h2>
-	<div class="box">
-		<div class="inbox">
-			<p>NO Info for you mate, just press forum</p>
-			<p><a href="javascript: history.go(-1)">Go back</a></p>
-		</div>
-	</div>
-</div>
-</div>
-
-<div id="brdfooter" class="block">
-	<div class="box">
-		<div class="inbox">
-			<p>zMotan Cheats 2018</p>
-			<ul>
-				<li><span><a href="tos.php">Terms and Conditions / Privacy policy</a></span></li>
-			</ul>
-			<div class="clearer"></div>
-		</div>
-	</div>
-</div>
-
-</div>
-<div class="end-box"></div>
-</div>
-
-</body>
-</html>
+</main>
+<?php Util::footer(); ?>
